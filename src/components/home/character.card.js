@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CharacterCard = ({ data }) => {
   return (
-    <div style={{ width: "250px" }} className="bg-grey d-flex flex-column m-2 p-2">
+    <div style={{ width: "300px" }} className="bg-grey d-flex flex-column mr-2 mb-2 p-2">
       <div className="center-all">
         <img
-          style={{ width: "200px", height: "200px", backgroundColor:"grey" }}
+          style={{ width: "200px", height: "200px", backgroundColor: "grey" }}
           className="bg-white rounded-circle mb-3 hand-pointer"
           src={data.image}
           alt=""
@@ -17,14 +18,14 @@ const CharacterCard = ({ data }) => {
           <span className="font-weight-bold mr-2">Status: </span> {data.status}
         </h5>
         <h5 className="display-7">
-          <span className="font-weight-bold mr-2">Especie:</span> {data.specie}
+          <span className="font-weight-bold mr-2">Especie:</span> {data.species}
         </h5>
-        <h5 className="display-7">
-          <span className="font-weight-bold mr-2">Location:</span> {data.name}
-        </h5>
-        <h5 className="display-7">
-          <span className="font-weight-bold mr-2">Episode: </span> {data.name}
-        </h5>
+        <Link path={data.location} className="display-7 d-block text-info">
+          <span className="font-weight-bold mr-2">Location:</span> {data.location.name}
+        </Link>
+        <Link className="display-7 d-block text-success">
+          <span className="font-weight-bold mr-2">Episodios: </span> {data.episode.length}
+        </Link>
       </div>
     </div>
   );

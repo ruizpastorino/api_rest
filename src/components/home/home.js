@@ -1,94 +1,81 @@
 import React, { useEffect, useState } from "react";
 import { StyledInput, StyledSelect } from "../utilities/styled-inputs";
+import Banner from "./banner";
 import CharacterCard from "./character.card";
 import Loading from "./loading";
+import PagesButtons from "./pages-buttons";
 
 const HomeScreen = () => {
-  let [pagesLength, setPagesLength] = useState([0]);
-  const [name, setName] = useState("");
-  const [characaters, setCharacters] = useState([]);
+  const [info, setInfo] = useState({});
+  let [currentPage, setCurrentPage] = useState(1);
+  const [keyword, setKeyword] = useState("");
+  const [charcacters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const api = "https://rickandmortyapi.com/api/character/";
+
   useEffect(() => {
-    getStart();
+    handleQuery();
+    setCurrentPage(1);
   }, []);
 
-  const generatePages = (ending) => {
-    console.log(ending);
-    const pagesLength = [];
-    for (let x = 0; x < ending; x++) {
-      pagesLength.push(x + 1);
-    }
-    setPagesLength(pagesLength);
-  };
-
-  const getStart = async () => {
-    try {
-      setLoading(true);
-      const query = await fetch("https://rickandmortyapi.com/api/character/?page=0");
-      const result = await query.json();
-      setCharacters(result.results);
-      generatePages(result.info.pages);
-      console.log(result);
-    } catch (err) {
-      console.log(err);
-    }
-    setLoading(false);
-  };
-
-  const pagesHandler = async ({ target }) => {
+  const handleQuery = async (params) => {
     setLoading(true);
-    try {
-      const query = await fetch("https://rickandmortyapi.com/api/character/?page=" + target.value);
-      const result = await query.json();
-      setCharacters(result.results);
-    } catch (err) {
-      console.log(err);
+    const query = await fetch(params ? params : api);
+    const { results, info } = await query.json();
+    if (query.status === 200) {
+      setCharacters(results);
+      setInfo(info);
+    } else {
+      setCharacters([]);
+      setInfo({});
     }
     setLoading(false);
   };
 
-  const handleSearchByName = async () => {
-    if (name !== "") {
-      const query = await fetch("https://rickandmortyapi.com/api/character/?name=" + name);
-      const result = await query.json();
-      pagesHandler(result.info.pages);
-      setCharacters(result.results);
-    }
+  const handleSearchByName = () => {
+    handleQuery(api + "?name=" + keyword);
+  };
+
+  const handlePages = (action) => {
+    handleQuery(info[action]);
+    setCurrentPage((currentPage += action === "next" ? 1 : -1));
   };
 
   return (
-    <div className="container d-flex flex-column screen">
-      <div className="bg-secondary p-3 d-flex w-100 rounded">
-        <div className="d-flex align-items-end">
-          <StyledInput
-            label="Buscar Personaje"
-            style={{ marginRight: "20px" }}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button className="btn btn-primary mr-5" onClick={handleSearchByName}>
-            <i className="fas fa-search display-6" />
-          </button>
+    <div className="d-flex screen">
+     <Banner/>
+      <div className="flex-1 d-flex flex-column h-100">
+        <div className="bg-secondary p-3 d-flex w-100 rounded">
+          <div className="d-flex align-items-end">
+            <StyledInput
+              label="Buscar Personaje"
+              style={{ marginRight: "20px" }}
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <button className="btn btn-primary mr-5" onClick={handleSearchByName}>
+              <i className="fas fa-search display-6" />
+            </button>
+            <PagesButtons action={handlePages} info={info} />
+          </div>
         </div>
-        <StyledSelect label="Pagina" icon="file" onChange={pagesHandler}>
-          {pagesLength.map((page) => (
-            <option key={page} value={page}>
-              {page}
-            </option>
-          ))}
-        </StyledSelect>
+        <p className="font-italic p-2">Mostrando {info.count} resultados</p>
+        {loading ? (
+          <Loading />
+        ) : charcacters.length ? (
+          <div className="d-flex flex-wrap scroll-area flex-1 align-items-start">
+            {charcacters.map((element, idx) => (
+              <CharacterCard key={idx} data={element} />
+            ))}
+          </div>
+        ) : (
+          <div className="center-all w-100 h-100">
+            <i className="fas fa-search display-3" />
+            <p className="strong-text display-5">Sin resultados</p>
+          </div>
+        )}
       </div>
-      <h5 className="strong-text my-3">Personajes</h5>
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className="d-flex flex-wrap scroll-area flex-1">
-          {characaters.map((element, idx) => (
-            <CharacterCard key={idx} data={element} />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
