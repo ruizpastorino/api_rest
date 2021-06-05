@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CharacterCard from "../home/character.card";
 import Loading from "../home/loading";
-import Pagination from "../utilities/pagination";
+import Pagination from "./pagination";
 import { Link } from "react-router-dom";
 
-const ResidentsGallery = ({ data }) => {
+const CharactersGallery = ({ data, title, setPickedEpisodes }) => {
   let [results, setResults] = useState([]);
   let [range, setRange] = useState({ min: 1, max: 25 });
   let [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ const ResidentsGallery = ({ data }) => {
   return (
     <div className="ml-3 flex-1 d-flex flex-column h-100">
       <div className="d-flex bg-light p-3">
-        <h3 className="strong-text flex-1 m-0">Residentes</h3>
+        <h4 className="strong-text flex-1 m-0">{title}</h4>
         <Link to="/" className="m-0 p-2 text-warning">
           Volver <i className="fas fa-home text-warning" />
         </Link>
@@ -45,7 +45,7 @@ const ResidentsGallery = ({ data }) => {
           <Loading />
         ) : (
           results.map((route, idx) => {
-            return <CharacterCard key={idx} data={route} />;
+            return <CharacterCard key={idx} data={route} setPickedEpisodes={setPickedEpisodes} />;
           })
         )}
       </div>
@@ -54,4 +54,4 @@ const ResidentsGallery = ({ data }) => {
   );
 };
 
-export default ResidentsGallery;
+export default CharactersGallery;

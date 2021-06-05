@@ -4,7 +4,7 @@ import Banner from "./banner";
 import CharacterCard from "./character.card";
 import Loading from "./loading";
 import PagesButtons from "./pages-buttons";
-import Picker from "./picker";
+import Picker from "../utilities/picker";
 
 const Home = () => {
   const [info, setInfo] = useState({});
@@ -40,12 +40,12 @@ const Home = () => {
 
   return (
     <div className="d-flex screen">
-      <Banner />
+      <Banner variant="primary" />
       <div className="flex-1 d-flex flex-column h-100">
         <div className="bg-secondary p-3 d-flex w-100 rounded">
-          <div className="d-flex align-items-end">
+          <div className="d-flex align-items-center">
+            <h5 className="strong-text m-0 mr-3">Buscar Personaje</h5>
             <StyledInput
-              label="Buscar Personaje"
               style={{ marginRight: "20px" }}
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}

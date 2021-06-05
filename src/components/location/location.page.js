@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../home/loading";
 import InfoBanner from "./info-banner";
-import ResidentsGallery from "./residents-gallery";
+import CharactersGallery from "../utilities/characters-gallery";
+import Picker from "../utilities/picker";
 
 const Location = ({ match }) => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [pickedEpisodes, setPickedEpisodes] = useState(false);
 
   const handleQuery = async () => {
-    setLoading(true);
     const query = await fetch("https://rickandmortyapi.com/api/location/" + match.params.id);
     const result = await query.json();
     if (query.status === 200) {
@@ -16,7 +16,6 @@ const Location = ({ match }) => {
     } else {
       console.log(result);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -30,7 +29,14 @@ const Location = ({ match }) => {
   ) : (
     <div className="screen d-flex">
       <InfoBanner data={data} />
-      <ResidentsGallery data={data.residents} />
+      <CharactersGallery
+        data={data.residents}
+        title={"Residentes de " + data.name}
+        setPickedEpisodes={setPickedEpisodes}
+      />
+      {pickedEpisodes && (
+        <Picker episodes={pickedEpisodes} close={() => setPickedEpisodes(false)} />
+      )}
     </div>
   );
 };
