@@ -6,14 +6,14 @@ const PagesButtons = ({ action, info }) => {
       <button
         disabled={info.prev === null}
         className="btn btn-warning mr-3"
-        onClick={() => action("prev")}
+        onClick={() => action(info.prev)}
       >
         <i className="fas fa-chevron-left" />
       </button>
       <button
         disabled={info.next === null}
         className="btn btn-warning"
-        onClick={() => action("next")}
+        onClick={() => action(info.next)}
       >
         <i className="fas fa-chevron-right" />
       </button>

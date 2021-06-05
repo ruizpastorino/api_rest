@@ -28,7 +28,7 @@ const Pagination = ({ length, setRange }) => {
     max = page * display;
     min = max - display;
     setPagination({ ...pagination, page, pages, range: _range, min, max });
-    setRange(min, max);
+    setRange({min, max});
   };
 
   const handlePages = (e) => {

@@ -5,9 +5,8 @@ import CharacterCard from "./character.card";
 import Loading from "./loading";
 import PagesButtons from "./pages-buttons";
 
-const HomeScreen = () => {
+const Home = () => {
   const [info, setInfo] = useState({});
-  let [currentPage, setCurrentPage] = useState(1);
   const [keyword, setKeyword] = useState("");
   const [charcacters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,7 +15,6 @@ const HomeScreen = () => {
 
   useEffect(() => {
     handleQuery();
-    setCurrentPage(1);
   }, []);
 
   const handleQuery = async (params) => {
@@ -27,8 +25,9 @@ const HomeScreen = () => {
       setCharacters(results);
       setInfo(info);
     } else {
+      console.log(info);
       setCharacters([]);
-      setInfo({});
+      setInfo({ next: null, prev: null });
     }
     setLoading(false);
   };
@@ -37,14 +36,9 @@ const HomeScreen = () => {
     handleQuery(api + "?name=" + keyword);
   };
 
-  const handlePages = (action) => {
-    handleQuery(info[action]);
-    setCurrentPage((currentPage += action === "next" ? 1 : -1));
-  };
-
   return (
     <div className="d-flex screen">
-     <Banner/>
+      <Banner />
       <div className="flex-1 d-flex flex-column h-100">
         <div className="bg-secondary p-3 d-flex w-100 rounded">
           <div className="d-flex align-items-end">
@@ -57,7 +51,7 @@ const HomeScreen = () => {
             <button className="btn btn-primary mr-5" onClick={handleSearchByName}>
               <i className="fas fa-search display-6" />
             </button>
-            <PagesButtons action={handlePages} info={info} />
+            <PagesButtons action={handleQuery} info={info} />
           </div>
         </div>
         <p className="font-italic p-2">Mostrando {info.count} resultados</p>
@@ -71,7 +65,7 @@ const HomeScreen = () => {
           </div>
         ) : (
           <div className="center-all w-100 h-100">
-            <i className="fas fa-search display-3" />
+            <i className="fas fa-search display-3 mb-5" />
             <p className="strong-text display-5">Sin resultados</p>
           </div>
         )}
@@ -80,4 +74,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;

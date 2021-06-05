@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CharacterCard = ({ data }) => {
+  const locationID = data.location.url.split("location/")[1];
+
   return (
     <div style={{ width: "300px" }} className="bg-grey d-flex flex-column mr-2 mb-2 p-2">
       <div className="center-all">
@@ -20,10 +22,10 @@ const CharacterCard = ({ data }) => {
         <h5 className="display-7">
           <span className="font-weight-bold mr-2">Especie:</span> {data.species}
         </h5>
-        <Link path={data.location} className="display-7 d-block text-info">
+        <Link to={`/location/${locationID}`} className="display-7 d-block text-info">
           <span className="font-weight-bold mr-2">Location:</span> {data.location.name}
         </Link>
-        <Link className="display-7 d-block text-success">
+        <Link to="/episodes" className="display-7 d-block text-success">
           <span className="font-weight-bold mr-2">Episodios: </span> {data.episode.length}
         </Link>
       </div>
