@@ -4,12 +4,14 @@ import Banner from "./banner";
 import CharacterCard from "./character.card";
 import Loading from "./loading";
 import PagesButtons from "./pages-buttons";
+import Picker from "./picker";
 
 const Home = () => {
   const [info, setInfo] = useState({});
   const [keyword, setKeyword] = useState("");
   const [charcacters, setCharacters] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [pickedEpisodes, setPickedEpisodes] = useState(false);
 
   const api = "https://rickandmortyapi.com/api/character/";
 
@@ -60,7 +62,7 @@ const Home = () => {
         ) : charcacters.length ? (
           <div className="d-flex flex-wrap scroll-area flex-1 align-items-start">
             {charcacters.map((element, idx) => (
-              <CharacterCard key={idx} data={element} />
+              <CharacterCard key={idx} data={element} setPickedEpisodes={setPickedEpisodes} />
             ))}
           </div>
         ) : (
@@ -70,6 +72,9 @@ const Home = () => {
           </div>
         )}
       </div>
+      {pickedEpisodes && (
+        <Picker episodes={pickedEpisodes} close={() => setPickedEpisodes(false)} />
+      )}
     </div>
   );
 };

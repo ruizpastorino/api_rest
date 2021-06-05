@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const CharacterCard = ({ data }) => {
+const CharacterCard = ({ data, setPickedEpisodes }) => {
   const locationID = data.location.url.split("location/")[1];
+
+  const handleEpisodes = () => {
+    setPickedEpisodes(data.episode.map((episode) => episode.split("episode/")[1]));
+  };
 
   return (
     <div style={{ width: "300px" }} className="bg-grey d-flex flex-column mr-2 mb-2 p-2">
@@ -25,9 +29,9 @@ const CharacterCard = ({ data }) => {
         <Link to={`/location/${locationID}`} className="display-7 d-block text-info">
           <span className="font-weight-bold mr-2">Location:</span> {data.location.name}
         </Link>
-        <Link to="/episodes" className="display-7 d-block text-success">
+        <h5 className="display-7 hand-pointer" onClick={handleEpisodes}>
           <span className="font-weight-bold mr-2">Episodios: </span> {data.episode.length}
-        </Link>
+        </h5>
       </div>
     </div>
   );
