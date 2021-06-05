@@ -494,8 +494,6 @@ li {
   animation: spin infinite 750ms reverse;
 }
 .spin {
-  width: 100%;
-  height: 100%;
   animation: spin 1s linear infinite;
 }
 @keyframes spin {
