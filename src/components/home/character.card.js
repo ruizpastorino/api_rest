@@ -9,27 +9,27 @@ const CharacterCard = ({ data, setPickedEpisodes }) => {
   };
 
   return (
-    <div style={{ width: "300px" }} className="bg-grey d-flex flex-column mr-2 mb-2 p-2">
+    <div style={{ width: "200px" }} className="bg-grey d-flex flex-column mr-2 mb-2 p-2">
       <div className="center-all">
         <img
-          style={{ width: "200px", height: "200px", backgroundColor: "grey" }}
+          style={{ width: "150px", height: "150px", backgroundColor: "grey" }}
           className="bg-white rounded-circle mb-3 hand-pointer"
           src={data.image}
           alt=""
         />
       </div>
       <div className="p-2">
-        <h4 className="strong-text display-6">{data.name}</h4>
-        <h5 className="display-7">
+        <h4 className="strong-text display-7">{data.name}</h4>
+        <h5 className="display-8">
           <span className="font-weight-bold mr-2">Status: </span> {data.status}
         </h5>
-        <h5 className="display-7">
+        <h5 className="display-8">
           <span className="font-weight-bold mr-2">Especie:</span> {data.species}
         </h5>
-        <Link to={`/location/${locationID}`} className="display-7 d-block text-info">
+        <Link to={`/location/${locationID}`} className="display-8 d-block text-info">
           <span className="font-weight-bold mr-2">Location:</span> {data.location.name}
         </Link>
-        <h5 className="display-7 hand-pointer" onClick={handleEpisodes}>
+        <h5 className="display-8 hand-pointer" onClick={handleEpisodes}>
           <span className="font-weight-bold mr-2">Episodios: </span> {data.episode.length}
         </h5>
       </div>

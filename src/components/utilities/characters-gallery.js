@@ -35,8 +35,8 @@ const CharactersGallery = ({ data, title, setPickedEpisodes }) => {
   return (
     <div className="ml-3 flex-1 d-flex flex-column h-100">
       <div className="d-flex bg-light p-3">
-        <h4 className="strong-text flex-1 m-0">{title}</h4>
-        <Link to="/" className="m-0 p-2 text-warning">
+        <h6 className="strong-text flex-1 m-0">{title}</h6>
+        <Link to="/" className="m-0 px-2 text-warning display-8">
           Volver <i className="fas fa-home text-warning" />
         </Link>
       </div>

@@ -67,7 +67,7 @@ const Pagination = ({ length, setRange }) => {
       </p>
 
       <div style={{width:"300px"}} className="d-flex align-items-center">
-        <i className="btn fas fa-chevron-circle-left display-6 click-animate text-secondary" onClick={previousPage} />
+        <i className="btn fas fa-chevron-circle-left display-7 click-animate text-secondary" onClick={previousPage} />
         <label className="m-0 mr-2">pagina</label>
         <select style={{ width: "unset" }} name="page" className="mr-2" onChange={handlePages} ref={pageInput}>
           {range.map((page, idx) => (
@@ -84,7 +84,7 @@ const Pagination = ({ length, setRange }) => {
           <option value={75}>75</option>
           <option value={100}>100</option>
         </select>
-        <i className="btn fas fa-chevron-circle-right display-6 click-animate text-secondary" onClick={nextPage} />
+        <i className="btn fas fa-chevron-circle-right display-7 click-animate text-secondary" onClick={nextPage} />
       </div>
 
       <p className="text-white flex-1 text-right text-truncate">total: {length} elementos</p>
